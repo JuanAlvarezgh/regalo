@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuenta Regresiva - Para Mi Amor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Estrellas de fondo */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .star {
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+        
+        .star:nth-child(odd) {
+            animation-delay: 1s;
+        }
+        
+        .star:nth-child(3n) {
+            animation-delay: 2s;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+        
+        /* Estrellas fugaces */
+        .shooting-star {
+            position: fixed;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(90deg, #fff, transparent);
+            border-radius: 50%;
+            z-index: 2;
+            animation: shoot 3s linear infinite;
+        }
+        
+        @keyframes shoot {
+            0% {
+                transform: translateX(-100px) translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateX(100vw) translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        /* Luna */
+        .moon {
+            position: fixed;
+            top: 10%;
+            right: 15%;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #f5f5dc 0%, #fffacd 100%);
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            z-index: 3;
+            animation: moonGlow 4s ease-in-out infinite alternate;
+        }
+        
+        .moon::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 25%;
+            width: 15px;
+            height: 10px;
+            background: rgba(200, 200, 200, 0.3);
+            border-radius: 50%;
+        }
+        
+        .moon::after {
+            content: '';
+            position: absolute;
+            top: 60%;
+            left: 60%;
+            width: 10px;
+            height: 8px;
+            background: rgba(200, 200, 200, 0.3);
+            border-radius: 50%;
+        }
+        
+        @keyframes moonGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.3); }
+            100% { box-shadow: 0 0 50px rgba(255, 255, 255, 0.5); }
+        }
+        
+        /* Césped */
+        .grass {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: linear-gradient(180deg, #1e4a1e 0%, #0f2a0f 100%);
+            z-index: 3;
+        }
+        
+        /* Gatitos */
+        .cats-container {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 4;
+            display: flex;
+            gap: 30px;
+            align-items: flex-end;
+        }
+        
+        .cat {
+            position: relative;
+            animation: catBreathing 3s ease-in-out infinite;
+        }
+        
+        .cat1 {
+            animation-delay: 0s;
+        }
+        
+        .cat2 {
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes catBreathing {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        .cat-body {
+            width: 80px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            border-radius: 50px 50px 30px 30px;
+            position: relative;
+        }
+        
+        .cat2 .cat-body {
+            background: linear-gradient(135deg, #87ceeb 0%, #4682b4 100%);
+        }
+        
+        .cat-head {
+            width: 60px;
+            height: 55px;
+            background: inherit;
+            border-radius: 50px 50px 40px 40px;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .cat-ear {
+            width: 20px;
+            height: 25px;
+            background: inherit;
+            border-radius: 50px 50px 0 0;
+            position: absolute;
+            top: -15px;
+        }
+        
+        .cat-ear.left {
+            left: 8px;
+            transform: rotate(-20deg);
+        }
+        
+        .cat-ear.right {
+            right: 8px;
+            transform: rotate(20deg);
+        }
+        
+        .cat-ear::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 12px;
+            background: #ffb6c1;
+            border-radius: 50px 50px 0 0;
+        }
+        
+        .cat-face {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .cat-eyes {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        
+        .cat-eye {
+            width: 8px;
+            height: 12px;
+            background: #000;
+            border-radius: 50%;
+            animation: blink 4s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 95% { height: 12px; }
+            97% { height: 2px; }
+            100% { height: 12px; }
+        }
+        
+        .cat-nose {
+            width: 6px;
+            height: 4px;
+            background: #ff69b4;
+            border-radius: 50%;
+            margin: 0 auto 4px;
+        }
+        
+        .cat2 .cat-nose {
+            background: #87ceeb;
+        }
+        
+        .cat-whiskers {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .whisker {
+            position: absolute;
+            width: 18px;
+            height: 1px;
+            background: #333;
+            border-radius: 1px;
+        }
+        
+        .whisker.left-top {
+            top: 45%;
+            left: -18px;
+            transform: rotate(15deg);
+            transform-origin: right center;
+        }
+        
+        .whisker.left-bottom {
+            top: 55%;
+            left: -18px;
+            transform: rotate(-15deg);
+            transform-origin: right center;
+        }
+        
+        .whisker.right-top {
+            top: 45%;
+            right: -18px;
+            transform: rotate(-15deg);
+            transform-origin: left center;
+        }
+        
+        .whisker.right-bottom {
+            top: 55%;
+            right: -18px;
+            transform: rotate(15deg);
+            transform-origin: left center;
+        }
+        
+        .cat-tail {
+            position: absolute;
+            right: -15px;
+            bottom: 10px;
+            width: 35px;
+            height: 8px;
+            background: inherit;
+            border-radius: 20px;
+            transform-origin: left center;
+            animation: tailWag 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes tailWag {
+            0% { transform: rotate(10deg); }
+            100% { transform: rotate(-10deg); }
+        }
+        
+        /* Contador */
+        .countdown-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 5;
+        }
+        
+        .countdown-title {
+            color: #fff;
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            animation: titlePulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titlePulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+        
+        .countdown-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .countdown-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            min-width: 100px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .countdown-item:nth-child(1) { animation-delay: 0s; }
+        .countdown-item:nth-child(2) { animation-delay: 0.5s; }
+        .countdown-item:nth-child(3) { animation-delay: 1s; }
+        .countdown-item:nth-child(4) { animation-delay: 1.5s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .countdown-number {
+            font-size: 3em;
+            font-weight: 700;
+            color: #ff69b4;
+            text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        .countdown-label {
+            color: #fff;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .countdown-message {
+            color: #fff;
+            font-size: 1.5em;
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Corazones flotantes */
+        .heart {
+            position: fixed;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: floatUp 6s linear infinite;
+            pointer-events: none;
+            z-index: 6;
+        }
+        
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .moon {
+                width: 80px;
+                height: 80px;
+                top: 5%;
+                right: 10%;
+            }
+            
+            .countdown-title {
+                font-size: 1.8em;
+            }
+            
+            .countdown-display {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .countdown-item {
+                min-width: 80px;
+                padding: 15px;
+            }
+            
+            .countdown-number {
+                font-size: 2em;
+            }
+            
+            .countdown-label {
+                font-size: 1em;
+            }
+            
+            .countdown-message {
+                font-size: 1.2em;
+                padding: 0 20px;
+            }
+            
+            .cat-body {
+                width: 60px;
+                height: 45px;
+            }
+            
+            .cat-head {
+                width: 45px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="stars"></div>
+    
+    <div class="moon"></div>
+    
+    <div class="grass"></div>
+    
+    <div class="cats-container">
+        <div class="cat cat1">
+            <div class="cat-body">
+                <div class="cat-head">
+                    <div class="cat-ear left"></div>
+                    <div class="cat-ear right"></div>
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <div class="cat-eye"></div>
+                            <div class="cat-eye"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                    </div>
+                    <div class="cat-whiskers">
+                        <div class="whisker left-top"></div>
+                        <div class="whisker left-bottom"></div>
+                        <div class="whisker right-top"></div>
+                        <div class="whisker right-bottom"></div>
+                    </div>
+                </div>
+                <div class="cat-tail"></div>
+            </div>
+        </div>
+        
+        <div class="cat cat2">
+            <div class="cat-body">
+                <div class="cat-head">
+                    <div class="cat-ear left"></div>
+                    <div class="cat-ear right"></div>
+                    <div class="cat-face">
+                        <div class="cat-eyes">
+                            <div class="cat-eye"></div>
+                            <div class="cat-eye"></div>
+                        </div>
+                        <div class="cat-nose"></div>
+                        <div class="cat-mouth"></div>
+                    </div>
+                    <div class="cat-whiskers">
+                        <div class="whisker left-top"></div>
+                        <div class="whisker left-bottom"></div>
+                        <div class="whisker right-top"></div>
+                        <div class="whisker right-bottom"></div>
+                    </div>
+                </div>
+                <div class="cat-tail"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="countdown-container">
+        <div class="countdown-title">💕 Faltan solo... 💕</div>
+        <div class="countdown-display">
+            <div class="countdown-item">
+                <span class="countdown-number" id="days">00</span>
+                <span class="countdown-label">Días</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="hours">00</span>
+                <span class="countdown-label">Horas</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="minutes">00</span>
+                <span class="countdown-label">Minutos</span>
+            </div>
+            <div class="countdown-item">
+                <span class="countdown-number" id="seconds">00</span>
+                <span class="countdown-label">Segundos</span>
+            </div>
+        </div>
+        <div class="countdown-message">
+            ¡Para nuestro momento especial! 💖<br>
+            Cada segundo que pasa es un segundo menos para estar juntos otra vez ✨
+        </div>
+    </div>
+
+    <script>
+        // Crear estrellas
+        function createStars() {
+            const starsContainer = document.querySelector('.stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+
+        // Crear estrellas fugaces
+        function createShootingStars() {
+            setInterval(() => {
+                const shootingStar = document.createElement('div');
+                shootingStar.className = 'shooting-star';
+                shootingStar.style.left = Math.random() * 100 + '%';
+                shootingStar.style.top = Math.random() * 50 + '%';
+                shootingStar.style.width = Math.random() * 100 + 50 + 'px';
+                shootingStar.style.height = '2px';
+                shootingStar.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                document.body.appendChild(shootingStar);
+                
+                setTimeout(() => {
+                    shootingStar.remove();
+                }, 3000);
+            }, 3000);
+        }
+
+        // Crear corazones flotantes
+        function createFloatingHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '💖';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.bottom = '0px';
+                heart.style.fontSize = Math.random() * 10 + 15 + 'px';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => {
+                    heart.remove();
+                }, 6000);
+            }, 2000);
+        }
+
+        // Función de cuenta regresiva
+        function startCountdown() {
+            // Cambia esta fecha por la fecha objetivo
+            const targetDate = new Date('2025-10-30T00:00:00').getTime();
+            
+            const countdown = setInterval(() => {
+                const now = new Date().getTime();
+                const timeLeft = targetDate - now;
+                
+                if (timeLeft < 0) {
+                    clearInterval(countdown);
+                    document.querySelector('.countdown-title').innerHTML = '🎉 ¡Es el día especial! 🎉';
+                    document.querySelector('.countdown-message').innerHTML = '¡Nuestro momento ha llegado! 💕✨';
+                    return;
+                }
+                
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            }, 1000);
+        }
+
+        // Inicializar todo
+        document.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            createShootingStars();
+            createFloatingHearts();
+            startCountdown();
+        });
+    </script>
+</body>
+</html>
