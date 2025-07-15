@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>¡Feliz Cumpleaños 19! 🎂</title>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
@@ -254,6 +255,31 @@
       transform: translateY(0);
     }
 
+    /* Botón para mostrar carta */
+    .letter-button {
+      background: linear-gradient(45deg, #a29bfe, #74b9ff);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(162,155,254,0.4);
+      transition: all 0.3s ease;
+      margin: 20px 0;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .letter-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(162,155,254,0.6);
+    }
+
+    .letter-button:active {
+      transform: translateY(0);
+    }
+
     /* Confeti */
     .confetti {
       position: fixed;
@@ -272,6 +298,128 @@
         transform: translateY(100vh) rotate(360deg);
         opacity: 0;
       }
+    }
+
+    /* Estilos para la carta digital */
+    .carta-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .carta-container {
+      background: #f8f4e6;
+      max-width: 600px;
+      width: 100%;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+      overflow: hidden;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .carta-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="lines" patternUnits="userSpaceOnUse" width="100" height="4"><line x1="0" y1="2" x2="100" y2="2" stroke="%23e0d5b7" stroke-width="0.5"/></pattern></defs><rect width="100%" height="100%" fill="url(%23lines)"/></svg>');
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .encabezado {
+      text-align: center;
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .fecha {
+      font-size: 14px;
+      color: #8B4513;
+      margin-bottom: 10px;
+      font-style: italic;
+    }
+
+    .titulo-carta {
+      font-family: 'Dancing Script', cursive;
+      font-size: 32px;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .subtitulo {
+      font-size: 16px;
+      color: #7f8c8d;
+    }
+
+    .contenido-carta {
+      position: relative;
+      z-index: 1;
+      line-height: 1.8;
+      color: #2c3e50;
+      font-size: 16px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .parrafo {
+      margin-bottom: 20px;
+      min-height: 20px;
+    }
+
+    .cursor {
+      display: inline-block;
+      background-color: #2c3e50;
+      width: 2px;
+      height: 20px;
+      animation: blink 1s infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+
+    .firma-carta {
+      margin-top: 40px;
+      text-align: right;
+      font-family: 'Dancing Script', cursive;
+      font-size: 24px;
+      color: #8B4513;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .cerrar-carta {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      font-size: 30px;
+      color: #2c3e50;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .cerrar-carta:hover {
+      color: #ff6b81;
     }
 
     /* Responsive */
@@ -298,6 +446,15 @@
         margin: 20px 15px;
         padding: 25px;
       }
+
+      .carta-container {
+        padding: 30px;
+        margin: 10px;
+      }
+
+      .titulo-carta {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -322,6 +479,10 @@
     <button class="blow-button" onclick="blowCandles()">
       🌬️ Sopla la vela y pide un deseo
     </button>
+
+    <button class="letter-button" onclick="mostrarCarta()">
+      💌 Leer carta especial
+    </button>
     
     <div class="message">
       <h2>💕 Teamo Miamor 💕</h2>
@@ -333,7 +494,91 @@
     </div>
   </div>
 
+  <!-- Overlay de la carta -->
+  <div class="carta-overlay" id="cartaOverlay">
+    <div class="carta-container">
+      <button class="cerrar-carta" onclick="cerrarCarta()">×</button>
+      
+      <div class="encabezado">
+        <div class="fecha">Medellín, 15 de julio de 2025</div>
+        <div class="titulo-carta">Para mi amor eterno</div>
+        <div class="subtitulo">Una carta desde el corazón</div>
+      </div>
+      
+      <div class="contenido-carta">
+        <div class="parrafo" id="parrafo1"></div>
+        <div class="parrafo" id="parrafo2"></div>
+        <div class="parrafo" id="parrafo3"></div>
+        <div class="parrafo" id="parrafo4"></div>
+      </div>
+      
+      <div class="firma-carta" id="firmaCarta">
+        Con todo mi amor,<br>
+        Juanca 💖
+      </div>
+    </div>
+  </div>
+
   <script>
+    const textosCarta = [
+      "Mi princesa hermosa, mientras escribo estas líneas, mi corazón se llena de una alegría inmensa al pensar en ti. Cada palabra que plasmo aquí lleva todo el amor que siento por ti, ese amor que crece día a día como las flores en primavera.",
+      
+      "Quiero que sepas que eres la razón por la que cada mañana tiene sentido. Tu sonrisa ilumina incluso mis días más oscuros, y tu risa es la melodía más hermosa que mis oídos han escuchado jamás. Contigo he descubierto lo que significa amar de verdad.",
+      
+      "Recuerdo cada momento especial que hemos compartido: nuestras largas conversaciones, nuestras risas compartidas, y esos silencios cómodos que solo se pueden tener con la persona correcta. Cada experiencia contigo se convierte en un tesoro guardado en mi corazón.",
+      
+      "Mi amor, quiero construir mil y un recuerdos más contigo. Quiero ser tu compañero en cada aventura, tu apoyo en cada desafío, y tu celebración en cada triunfo. Prometo amarte con la misma intensidad hoy, mañana y siempre."
+    ];
+    
+    let parrafoActual = 0;
+    let charIndex = 0;
+    let cartaAbierta = false;
+    
+    function typeWriter() {
+      if (parrafoActual < textosCarta.length) {
+        const elemento = document.getElementById(`parrafo${parrafoActual + 1}`);
+        const textoCompleto = textosCarta[parrafoActual];
+        
+        if (charIndex < textoCompleto.length) {
+          elemento.innerHTML = textoCompleto.substring(0, charIndex + 1) + '<span class="cursor"></span>';
+          charIndex++;
+          setTimeout(typeWriter, 50);
+        } else {
+          elemento.innerHTML = textoCompleto;
+          parrafoActual++;
+          charIndex = 0;
+          setTimeout(typeWriter, 1000);
+        }
+      } else {
+        setTimeout(() => {
+          document.getElementById('firmaCarta').style.opacity = '1';
+        }, 500);
+      }
+    }
+
+    function mostrarCarta() {
+      document.getElementById('cartaOverlay').style.display = 'flex';
+      cartaAbierta = true;
+      
+      // Reiniciar variables
+      parrafoActual = 0;
+      charIndex = 0;
+      
+      // Limpiar párrafos
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`parrafo${i}`).innerHTML = '';
+      }
+      document.getElementById('firmaCarta').style.opacity = '0';
+      
+      // Iniciar escritura
+      setTimeout(typeWriter, 1000);
+    }
+
+    function cerrarCarta() {
+      document.getElementById('cartaOverlay').style.display = 'none';
+      cartaAbierta = false;
+    }
+
     function createConfetti() {
       const colors = ['#ff6b81', '#ffeaa7', '#fd79a8', '#74b9ff', '#a29bfe', '#fdcb6e'];
       
@@ -369,12 +614,10 @@
       
       createConfetti();
       
-      // Mensaje especial después de soplar
       setTimeout(() => {
         alert('🎊 ¡Que todos tus deseos se hagan realidad! Te amo mucho 💕');
       }, 1000);
       
-      // Reiniciar después de 3 segundos
       setTimeout(() => {
         flames.forEach(flame => {
           flame.style.animation = 'flicker 1s ease-in-out infinite alternate';
@@ -388,6 +631,13 @@
 
     // Confeti inicial
     setTimeout(createConfetti, 1000);
+
+    // Cerrar carta con ESC
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && cartaAbierta) {
+        cerrarCarta();
+      }
+    });
   </script>
 </body>
 </html>
