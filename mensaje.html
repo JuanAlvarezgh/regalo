@@ -207,6 +207,7 @@
       max-width: 500px;
       box-shadow: 0 15px 35px rgba(0,0,0,0.1);
       border: 1px solid rgba(255,255,255,0.3);
+      position: relative;
     }
 
     .message h2 {
@@ -228,6 +229,84 @@
       font-style: italic;
       font-weight: 600;
       margin-top: 20px;
+    }
+
+    /* Enlace del contador con reloj cute */
+    .contador-link {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #ff6b81;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.3);
+      padding: 8px 12px;
+      border-radius: 15px;
+      backdrop-filter: blur(5px);
+    }
+
+    .contador-link:hover {
+      transform: scale(1.05);
+      color: #ff8fa3;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .clock-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ff6b81, #ff8fa3);
+      position: relative;
+      animation: clockTick 2s ease-in-out infinite;
+      box-shadow: 0 2px 8px rgba(255,107,129,0.3);
+    }
+
+    @keyframes clockTick {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .clock-icon::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 2px;
+      height: 8px;
+      background: white;
+      transform: translate(-50%, -50%) rotate(90deg);
+      transform-origin: center bottom;
+      border-radius: 1px;
+      animation: hourHand 12s linear infinite;
+    }
+
+    .clock-icon::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 1px;
+      height: 10px;
+      background: white;
+      transform: translate(-50%, -50%);
+      transform-origin: center bottom;
+      border-radius: 1px;
+      animation: minuteHand 1s linear infinite;
+    }
+
+    @keyframes hourHand {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    @keyframes minuteHand {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
 
     /* Botón para soplar velas */
@@ -447,6 +526,12 @@
         padding: 25px;
       }
 
+      .contador-link {
+        position: static;
+        margin-top: 15px;
+        align-self: flex-end;
+      }
+
       .carta-container {
         padding: 30px;
         margin: 10px;
@@ -491,6 +576,11 @@
       <p>Que este nuevo año cumplas tus sueños y ojala podamos redimir más momentos únicos. 🌟</p>
       <p>Gracias por ser la persona más especial en mi vida. Te amo más de lo que las palabras pueden expresar. 💖</p>
       <div class="signature">Con todo mi amor, Juanca 💕</div>
+      
+      <a href="cuentaregresiva.html" class="contador-link">
+        <div class="clock-icon"></div>
+        <span></span>
+      </a>
     </div>
   </div>
 
