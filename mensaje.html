@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Cumpleaños 19! 🎂</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      color: #ff6b81;
+      margin-bottom: 30px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    .cake-container {
+      position: relative;
+      margin: 40px auto;
+      width: 350px;
+      height: 400px;
+    }
+
+    /* Base de la torta */
+    .cake-base {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 280px;
+      height: 120px;
+      background: linear-gradient(45deg, #ff6b81, #ff8fa3);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      animation: cakeFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes cakeFloat {
+      0%, 100% { transform: translateX(-50%) translateY(0px); }
+      50% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* Decoraciones de la base */
+    .cake-base::before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      height: 20px;
+      background: linear-gradient(45deg, #ffeaa7, #fab1a0);
+      border-radius: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .cake-base::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: -10px;
+      right: -10px;
+      height: 20px;
+      background: linear-gradient(45deg, #fd79a8, #fdcb6e);
+      border-radius: 25px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    /* Número 19 */
+    .number {
+      position: absolute;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 4rem;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+      animation: numberGlow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes numberGlow {
+      from { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.5); }
+      to { text-shadow: 3px 3px 6px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.8); }
+    }
+
+    /* Velas */
+    .candle {
+      position: absolute;
+      width: 12px;
+      height: 60px;
+      background: linear-gradient(to bottom, #ff6b81, #ff8fa3);
+      border-radius: 6px;
+      top: -50px;
+      box-shadow: 0 3px 15px rgba(0,0,0,0.3);
+    }
+
+    .candle1 { left: 50%; transform: translateX(-50%); }
+
+    .flame {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 14px;
+      height: 20px;
+      background: radial-gradient(circle, #ffeb3b 30%, #ff9800 70%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      animation: flicker 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+      50% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+      100% { transform: translateX(-50%) scale(0.9) rotate(-1deg); }
+    }
+
+    /* Decoraciones cute */
+    .decoration {
+      position: absolute;
+      border-radius: 50%;
+      animation: decorationFloat 4s ease-in-out infinite;
+    }
+
+    .decoration1 {
+      width: 20px;
+      height: 20px;
+      background: #ffeaa7;
+      top: 30px;
+      left: 30px;
+      animation-delay: 0s;
+    }
+
+    .decoration2 {
+      width: 15px;
+      height: 15px;
+      background: #fd79a8;
+      top: 80px;
+      right: 40px;
+      animation-delay: 1s;
+    }
+
+    .decoration3 {
+      width: 25px;
+      height: 25px;
+      background: #74b9ff;
+      top: 120px;
+      left: 20px;
+      animation-delay: 2s;
+    }
+
+    .decoration4 {
+      width: 18px;
+      height: 18px;
+      background: #a29bfe;
+      top: 60px;
+      right: 60px;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes decorationFloat {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-10px) rotate(180deg); }
+    }
+
+    /* Mensaje especial */
+    .message {
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.7));
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 30px;
+      margin: 40px 20px;
+      max-width: 500px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .message h2 {
+      color: #ff6b81;
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .message p {
+      color: #2d3436;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .message .signature {
+      color: #ff6b81;
+      font-style: italic;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    /* Botón para soplar velas */
+    .blow-button {
+      background: linear-gradient(45deg, #ff6b81, #ff8fa3);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(255,107,129,0.4);
+      transition: all 0.3s ease;
+      margin: 20px 0;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .blow-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(255,107,129,0.6);
+    }
+
+    .blow-button:active {
+      transform: translateY(0);
+    }
+
+    /* Confeti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      background: #ff6b81;
+      animation: confettiFall 3s linear infinite;
+    }
+
+    @keyframes confettiFall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .title {
+        font-size: 2rem;
+      }
+      
+      .cake-container {
+        width: 300px;
+        height: 350px;
+      }
+      
+      .cake-base {
+        width: 240px;
+        height: 100px;
+      }
+      
+      .number {
+        font-size: 3rem;
+      }
+      
+      .message {
+        margin: 20px 15px;
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">🎉 ¡Feliz Cumpleaños 19! 🎉</h1>
+    
+    <div class="cake-container">
+      <div class="cake-base">
+        <div class="number">19</div>
+        <div class="candle candle1">
+          <div class="flame"></div>
+        </div>
+      </div>
+      
+      <div class="decoration decoration1"></div>
+      <div class="decoration decoration2"></div>
+      <div class="decoration decoration3"></div>
+      <div class="decoration decoration4"></div>
+    </div>
+    
+    <button class="blow-button" onclick="blowCandles()">
+      🌬️ Sopla la vela y pide un deseo
+    </button>
+    
+    <div class="message">
+      <h2>💕 Mi mensaje especial para ti 💕</h2>
+      <p>¡Hoy cumples 19 años! 🎂</p>
+      <p>Cada día a tu lado es un regalo especial. Tu amor hace que todo sea más hermoso. ✨</p>
+      <p>Que este nuevo año cumplas tus sueños y ojala podamos redimir más momentos únicos. 🌟</p>
+      <p>Gracias por ser la persona más especial en mi vida. Te amo más de lo que las palabras pueden expresar. 💖</p>
+      <div class="signature">Con todo mi amor, Juanca 💕</div>
+    </div>
+  </div>
+
+  <script>
+    function createConfetti() {
+      const colors = ['#ff6b81', '#ffeaa7', '#fd79a8', '#74b9ff', '#a29bfe', '#fdcb6e'];
+      
+      for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDelay = Math.random() * 3 + 's';
+        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(confetti);
+        
+        setTimeout(() => {
+          if (confetti.parentNode) {
+            confetti.parentNode.removeChild(confetti);
+          }
+        }, 5000);
+      }
+    }
+
+    function blowCandles() {
+      const flames = document.querySelectorAll('.flame');
+      const button = document.querySelector('.blow-button');
+      
+      flames.forEach(flame => {
+        flame.style.animation = 'none';
+        flame.style.opacity = '0';
+        flame.style.transform = 'translateX(-50%) scale(0)';
+      });
+      
+      button.textContent = '🎉 ¡Deseo cumplido!';
+      button.style.background = 'linear-gradient(45deg, #00b894, #00cec9)';
+      
+      createConfetti();
+      
+      // Mensaje especial después de soplar
+      setTimeout(() => {
+        alert('🎊 ¡Que todos tus deseos se hagan realidad! Te amo mucho 💕');
+      }, 1000);
+      
+      // Reiniciar después de 3 segundos
+      setTimeout(() => {
+        flames.forEach(flame => {
+          flame.style.animation = 'flicker 1s ease-in-out infinite alternate';
+          flame.style.opacity = '1';
+          flame.style.transform = 'translateX(-50%) scale(1)';
+        });
+        button.textContent = '🌬️ Sopla las velas y pide un deseo';
+        button.style.background = 'linear-gradient(45deg, #ff6b81, #ff8fa3)';
+      }, 3000);
+    }
+
+    // Confeti inicial
+    setTimeout(createConfetti, 1000);
+  </script>
+</body>
+</html>

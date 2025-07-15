@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Galería de Nosotros 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ffecec, #fff5f5, #ffecec);
+      background-size: 400% 400%;
+      animation: gradientFlow 10s ease infinite;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    @keyframes gradientFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .hearts-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      top: 0;
+      left: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 20px;
+      animation: float 8s linear infinite;
+      opacity: 0;
+    }
+
+    .heart::before {
+      content: '♥';
+    }
+
+    .small { font-size: 12px; }
+    .medium { font-size: 18px; }
+    .large { font-size: 25px; }
+    .extra-large { font-size: 35px; }
+
+    .variant1 { color: #ff4757; }
+    .variant2 { color: #ff6b6b; }
+    .variant3 { color: #ff7675; }
+    .variant4 { color: #fd79a8; }
+    .variant5 { color: #e84393; }
+    .variant6 { color: #ffeaa7; }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    }
+
+    .content {
+      text-align: center;
+      padding: 60px 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .content h1 {
+      font-size: 2.5rem;
+      color: #ff6b81;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .subtitle {
+      font-size: 1.2rem;
+      color: #c0392b;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      margin: 40px auto;
+      padding: 0 20px;
+      max-width: 1200px;
+    }
+
+    .photo-item {
+      background: linear-gradient(145deg, #ffffff, #f8f9fa);
+      border-radius: 20px;
+      padding: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    .photo-item:hover::before {
+      left: 100%;
+    }
+
+    .photo-item:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    }
+
+    .photo-placeholder {
+      height: 180px;
+      background: linear-gradient(135deg, #fab1a0, #ffeaa7);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #444;
+      font-size: 1rem;
+      margin-bottom: 15px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* ESTILOS PARA IMÁGENES REALES */
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .photo-placeholder .image-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255, 107, 129, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 15px;
+      z-index: 2;
+      transition: opacity 0.6s ease;
+    }
+
+    .photo-item.flipped .image-overlay {
+      opacity: 0;
+    }
+
+    .photo-caption {
+      color: #c0392b;
+      font-weight: bold;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .photo-date {
+      color: #7f8c8d;
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+
+    /* Estilos para la torta */
+    .cake-container {
+      margin-top: 120px;
+      margin-bottom: 60px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .cake-container:hover {
+      transform: translateY(-5px) scale(1.05);
+    }
+
+    .cake {
+      width: 200px;
+      height: 150px;
+      margin: 0 auto;
+      position: relative;
+      animation: cakeGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes cakeGlow {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(255,107,129,0.5)); }
+      50% { filter: drop-shadow(0 0 20px rgba(255,107,129,0.8)); }
+    }
+
+    .cake-base {
+      width: 180px;
+      height: 80px;
+      background: linear-gradient(145deg, #8B4513, #A0522D);
+      border-radius: 10px;
+      position: absolute;
+      bottom: 0;
+      left: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .cake-layer1 {
+      width: 160px;
+      height: 60px;
+      background: linear-gradient(145deg, #ff6b81, #ff85a2);
+      border-radius: 8px;
+      position: absolute;
+      bottom: 80px;
+      left: 20px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .cake-layer2 {
+      width: 140px;
+      height: 50px;
+      background: linear-gradient(145deg, #ffeaa7, #fdcb6e);
+      border-radius: 6px;
+      position: absolute;
+      bottom: 140px;
+      left: 30px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .cake-decoration {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #ff4757;
+      border-radius: 50%;
+      animation: twinkle 1.5s ease-in-out infinite;
+    }
+
+    .decoration1 { top: 25px; left: 40px; animation-delay: 0s; }
+    .decoration2 { top: 35px; left: 70px; animation-delay: 0.3s; }
+    .decoration3 { top: 25px; left: 100px; animation-delay: 0.6s; }
+    .decoration4 { top: 85px; left: 30px; animation-delay: 0.9s; }
+    .decoration5 { top: 95px; left: 80px; animation-delay: 1.2s; }
+    .decoration6 { top: 85px; left: 120px; animation-delay: 1.5s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .candle {
+      width: 6px;
+      height: 30px;
+      background: linear-gradient(to bottom, #ff6b6b, #ff4757);
+      position: absolute;
+      bottom: 190px;
+      left: 97px;
+      border-radius: 3px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .flame {
+      width: 12px;
+      height: 15px;
+      background: radial-gradient(circle, #ffeb3b, #ff9800);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      top: -15px;
+      left: -3px;
+      animation: flicker 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); }
+      100% { transform: scale(1.1) rotate(2deg); }
+    }
+
+    .cake-number {
+      position: absolute;
+      bottom: 105px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 3rem;
+      font-weight: bold;
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      animation: numberPulse 1s ease-in-out infinite;
+    }
+
+    @keyframes numberPulse {
+      0%, 100% { transform: translateX(-50%) scale(1); }
+      50% { transform: translateX(-50%) scale(1.1); }
+    }
+
+    .cake-text {
+      margin-top: 20px;
+      font-size: 1.3rem;
+      color: #ff6b81;
+      font-weight: bold;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .cake-subtext {
+      font-size: 1rem;
+      color: #c0392b;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* Contador de fotos reveladas */
+    .progress-bar {
+      width: 80%;
+      max-width: 400px;
+      height: 8px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      margin: 30px auto;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b81, #ff85a2);
+      width: 0%;
+      transition: width 0.5s ease;
+      border-radius: 10px;
+    }
+
+    .progress-text {
+      color: #c0392b;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    /* Efectos de partículas al hacer clic */
+    .particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ff6b81;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: particleFloat 1s ease-out forwards;
+    }
+
+    @keyframes particleFloat {
+      to {
+        transform: translateY(-50px) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Mensaje de completado */
+    .completion-message {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      background: linear-gradient(45deg, #ff6b81, #ff85a2);
+      color: white;
+      padding: 30px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      z-index: 1000;
+      transition: transform 0.5s ease;
+    }
+
+    .completion-message.show {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    /* Botón de música */
+    .music-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(145deg, #ffffff, #f0f0f0);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      z-index: 100;
+      border: none;
+      outline: none;
+    }
+
+    .music-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .music-button:active {
+      transform: translateY(0);
+    }
+
+    .music-icon {
+      font-size: 24px;
+      color: #ff6b81;
+      transition: all 0.3s ease;
+    }
+
+    .music-button.playing .music-icon {
+      animation: musicPulse 1s ease-in-out infinite;
+    }
+
+    .music-button.muted .music-icon {
+      opacity: 0.5;
+      color: #ccc;
+    }
+
+    @keyframes musicPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    audio {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .content h1 {
+        font-size: 2rem;
+      }
+      .photo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 20px;
+      }
+      .photo-placeholder {
+        height: 140px;
+      }
+      .cake {
+        width: 160px;
+        height: 120px;
+      }
+      .cake-base {
+        width: 140px;
+        height: 60px;
+      }
+      .cake-layer1 {
+        width: 120px;
+        height: 45px;
+        bottom: 60px;
+        left: 20px;
+      }
+      .cake-layer2 {
+        width: 100px;
+        height: 35px;
+        bottom: 105px;
+        left: 30px;
+      }
+      .cake-number {
+        font-size: 2rem;
+        bottom: 75px;
+      }
+      .candle {
+        bottom: 140px;
+        left: 77px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <!-- Botón de música -->
+  <button class="music-button" id="musicButton" onclick="toggleMusic()">
+    <div class="music-icon">🎵</div>
+  </button>
+
+  <div class="content">
+    <h1>💕 Nuestra Galería de Amor 💕</h1>
+    <div class="subtitle">Cada momento es especial contigo ✨</div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text" id="progressText">0 de 10 recuerdos descubiertos</div>
+
+    <div class="photo-grid">
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia1.jpg" alt="Primera Cita">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Mi amor, mi vida, mi todo</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia2.jpg" alt="Selfie Tonta">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Mi princesita 👸</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia3.jpg" alt="Momento Especial">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption"> &lt;3 </div>
+        <div class="photo-date">💕</div>
+      </div>
+      
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia4.jpg" alt="Juntos">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Tú > todo lo demás</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia5.jpg" alt="Puesta de sol">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Eres mi todo, mi cielo</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia6.jpg" alt="Caminando">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">⛏🧱</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia7.jpg" alt="Cena Especial">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Los pollitos 🐥</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia8.jpg" alt="Viaje">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Mi bebé 🐈‍⬛</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia9.jpg" alt="Abrazos">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Mi tralalerita 🦈</div>
+        <div class="photo-date">💕</div>
+      </div>
+
+      <div class="photo-item" onclick="revealPhoto(this)">
+        <div class="photo-placeholder">
+          <img src="tengoenvidia10.jpg" alt="Momentos Random">
+          <div class="image-overlay">🎁 Haz clic para revelar</div>
+        </div>
+        <div class="photo-caption">Mi chacalita ✨ </div>
+        <div class="photo-date">💕</div>
+      </div>
+    </div>
+
+    <!-- Torta de cumpleaños -->
+    <div class="cake-container" onclick="goToMessage()">
+      <div class="cake">
+        <div class="cake-base"></div>
+        <div class="cake-layer1"></div>
+        <div class="cake-layer2"></div>
+        <div class="cake-decoration decoration1"></div>
+        <div class="cake-decoration decoration2"></div>
+        <div class="cake-decoration decoration3"></div>
+        <div class="cake-decoration decoration4"></div>
+        <div class="cake-decoration decoration5"></div>
+        <div class="cake-decoration decoration6"></div>
+        <div class="candle">
+          <div class="flame"></div>
+        </div>
+        <div class="cake-number">19</div>
+      </div>
+      <div class="cake-text">🎂 ¡Feliz Cumpleaños! 🎂</div>
+      <div class="cake-subtext">Haz clic en la torta para tu sorpresa</div>
+    </div>
+    
+  </div>
+
+  <div class="completion-message" id="completionMessage">
+    🎉 ¡Has descubierto todos nuestros recuerdos! 🎉
+  </div>
+
+  <!-- Música de fondo -->
+  <audio id="backgroundMusic" autoplay>
+    <source src="audio.mp3" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+
+  <script>
+    const heartsContainer = document.getElementById('heartsContainer');
+    const colors = ['variant1', 'variant2', 'variant3', 'variant4', 'variant5', 'variant6'];
+    const sizes = ['small', 'medium', 'large', 'extra-large'];
+    let revealedCount = 0;
+    const totalPhotos = 10;
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+      heart.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+      heart.style.left = Math.random() * 100 + '%';
+      const duration = 5 + Math.random() * 6;
+      heart.style.animationDuration = duration + 's';
+      heart.style.animationDelay = Math.random() * 3 + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => {
+        if (heart.parentNode) heart.parentNode.removeChild(heart);
+      }, (duration + 3) * 1000);
+    }
+
+    function startHeartAnimation() {
+      createHeart();
+      setTimeout(startHeartAnimation, 100 + Math.random() * 200);
+    }
+
+    function createParticles(x, y) {
+      for (let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.transform = `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px)`;
+        document.body.appendChild(particle);
+        setTimeout(() => {
+          if (particle.parentNode) particle.parentNode.removeChild(particle);
+        }, 1000);
+      }
+    }
+
+    function updateProgress() {
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+      const percentage = (revealedCount / totalPhotos) * 100;
+      
+      progressFill.style.width = percentage + '%';
+      progressText.textContent = `${revealedCount} de ${totalPhotos} recuerdos descubiertos`;
+      
+      if (revealedCount === totalPhotos) {
+        setTimeout(() => {
+          const completionMessage = document.getElementById('completionMessage');
+          completionMessage.classList.add('show');
+          setTimeout(() => {
+            completionMessage.classList.remove('show');
+          }, 3000);
+        }, 500);
+      }
+    }
+
+    function revealPhoto(photoItem) {
+      if (!photoItem.classList.contains('flipped')) {
+        photoItem.classList.add('flipped');
+        revealedCount++;
+        updateProgress();
+        
+        // Crear partículas en la posición del clic
+        const rect = photoItem.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        createParticles(x, y);
+        
+        // Agregar más corazones temporalmente
+        for (let i = 0; i < 3; i++) {
+          setTimeout(createHeart, i * 100);
+        }
+      }
+    }
+
+    function goToMessage() {
+      window.location.href = 'mensaje.html';
+    }
+
+    // Control de música
+    let isPlaying = false;
+    const musicButton = document.getElementById('musicButton');
+    const backgroundMusic = document.getElementById('backgroundMusic');
+
+    function toggleMusic() {
+      if (isPlaying) {
+        backgroundMusic.pause();
+        musicButton.classList.remove('playing');
+        musicButton.classList.add('muted');
+        musicButton.querySelector('.music-icon').textContent = '🔇';
+      } else {
+        backgroundMusic.play().catch(e => {
+          console.log('Error al reproducir música:', e);
+        });
+        musicButton.classList.add('playing');
+        musicButton.classList.remove('muted');
+        musicButton.querySelector('.music-icon').textContent = '🎵';
+      }
+      isPlaying = !isPlaying;
+    }
+
+    // Inicializar música
+    backgroundMusic.volume = 0.5; // Volumen al 50%
+
+    // Inicializar animaciones
+    startHeartAnimation();
+    for (let i = 0; i < 15; i++) {
+      setTimeout(createHeart, i * 100);
+    }
+  </script>
+</body>
+</html>

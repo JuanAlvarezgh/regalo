@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Para mi amor 💖</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(45deg, #ffecec, #fff5f5, #ffebeb, #ffe4e6);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Botón de galería con cámara */
+    .gallery-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 50%;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: pulse 2s infinite;
+    }
+
+    .gallery-btn:hover {
+      transform: translateY(-3px) scale(1.1);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    /* Cámara CSS */
+    .camera-icon {
+      position: relative;
+      width: 40px;
+      height: 28px;
+      background: #4a4a4a;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .camera-icon::before {
+      content: '';
+      position: absolute;
+      top: -6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 12px;
+      height: 6px;
+      background: #333;
+      border-radius: 2px;
+    }
+
+    .camera-icon::after {
+      content: '';
+      position: absolute;
+      top: -8px;
+      right: 8px;
+      width: 8px;
+      height: 4px;
+      background: #666;
+      border-radius: 1px;
+    }
+
+    .camera-lens {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .camera-lens::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #4a90e2, #357abd);
+      position: relative;
+    }
+
+    .camera-lens::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      top: 3px;
+      left: 5px;
+    }
+
+    .camera-heart {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      font-size: 16px;
+      color: #ff6b6b;
+      animation: heartBeat 1.5s ease-in-out infinite;
+    }
+
+    @keyframes heartBeat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Música toggle */
+    .music-toggle {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .music-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Fondo animado de corazones mejorado */
+    .hearts-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .heart {
+      position: absolute;
+      color: #ff6b6b;
+      font-size: 20px;
+      animation: float 8s linear infinite;
+      opacity: 0;
+      z-index: 0;
+    }
+
+    .heart::before {
+      content: '♥';
+    }
+
+    .heart.small {
+      font-size: 14px;
+    }
+    .heart.medium {
+      font-size: 20px;
+    }
+    .heart.large {
+      font-size: 28px;
+    }
+
+    .heart.variant1 {
+      color: #ff4757;
+    }
+    .heart.variant2 {
+      color: #ff6b6b;
+    }
+    .heart.variant3 {
+      color: #ff7675;
+    }
+    .heart.variant4 {
+      color: #fd79a8;
+    }
+
+    /* Estrellas adicionales */
+    .star {
+      position: absolute;
+      color: #ffd700;
+      font-size: 16px;
+      animation: twinkle 3s ease-in-out infinite;
+      opacity: 0;
+    }
+
+    .star::before {
+      content: '✨';
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Estilos del sobre mejorados */
+    .envelope {
+      --duration: 1000ms;
+      --envelope-width: 320px;
+      --envelope-height: 200px;
+      --envelope-clr-bg: #ffb6c1;
+      --envelope-clr-bg-side: #f8a5c2;
+      --envelope-clr-bg-bottom: #f78fb3;
+      --envelope-clr-bg-top: #f190b7;
+      --envelope-clr-txt: #fff;
+      --letter-clr-bg: #fff;
+      --letter-clr-text: #c0392b;
+      --letter-font-size: 1rem;
+
+      position: relative;
+      margin: 0 auto;
+      top: 50%;
+      transform: translateY(-50%);
+      perspective: 1000px;
+      width: var(--envelope-width);
+      height: var(--envelope-height);
+      cursor: pointer;
+      z-index: 1;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.2));
+    }
+
+    @media (min-width: 720px) {
+      .envelope {
+        --envelope-width: 600px;
+        --envelope-height: 350px;
+        --letter-font-size: 1.6rem;
+      }
+    }
+
+    .envelope:hover {
+      --envelope-transform: rotateY(180deg);
+      --fold-rotate: rotateX(180deg);
+      --fold-zindex: 0;
+      --letter-height: calc(var(--envelope-height) * 1.75);
+      filter: drop-shadow(0 15px 40px rgba(0,0,0,0.3));
+    }
+
+    .envelope-inner {
+      width: 100%;
+      height: 100%;
+      transition: var(--duration);
+      transform-style: preserve-3d;
+      transform: var(--envelope-transform, rotateY(0deg));
+      display: grid;
+    }
+
+    .envelope-front,
+    .envelope-back {
+      grid-area: 1/1;
+      backface-visibility: hidden;
+      background: linear-gradient(135deg, var(--envelope-clr-bg), #ff9eb5);
+      width: 100%;
+      height: 100%;
+      position: relative;
+      isolation: isolate;
+    }
+
+    .envelope-front {
+      color: var(--envelope-clr-txt);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .envelope-front .address p {
+      margin: 0.5rem 0;
+      font-size: 1rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .envelope-back {
+      transform: rotateY(180deg);
+    }
+
+    .envelope-back::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      background-image: conic-gradient(
+        transparent 60deg,
+        var(--envelope-clr-bg-side) 60deg 120deg,
+        var(--envelope-clr-bg-bottom) 120deg 240deg,
+        var(--envelope-clr-bg-side) 240deg 300deg,
+        transparent 300deg
+      );
+    }
+
+    .top-fold {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--envelope-clr-bg-top), #ff7a9a);
+      clip-path: polygon(0% 0%, 50% 55%, 100% 0%);
+      transform: var(--fold-rotate, rotateX(0deg));
+      transform-origin: top;
+      transition: var(--duration);
+      z-index: var(--fold-zindex, 10);
+    }
+
+    .letter {
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      width: 90%;
+      height: var(--letter-height, calc(var(--envelope-height) - 2rem));
+      font-size: var(--letter-font-size);
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--letter-clr-bg), #fff9f9);
+      padding: 2em 3em;
+      text-align: center;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--letter-clr-text);
+      transition: var(--duration);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+
+    .letter img {
+      max-width: 100px;
+      margin-bottom: 1rem;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .highlight {
+      display: block;
+      font-size: 1.5rem;
+      color: #ff4d6d;
+      margin-top: 0.5rem;
+      font-weight: bold;
+      font-family: 'Dancing Script', cursive;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Mensaje romántico flotante */
+    .floating-message {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      padding: 15px 25px;
+      border-radius: 25px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.2rem;
+      color: #c0392b;
+      z-index: 1000;
+      animation: floatMessage 4s ease-in-out infinite;
+    }
+
+    @keyframes floatMessage {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(-10px); }
+    }
+
+    /* Confeti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: #ff6b6b;
+      animation: confetti-fall 3s linear infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón de música -->
+  <button class="music-toggle" onclick="toggleMusic()" id="musicBtn">🎵</button>
+  
+  <!-- Botón hacia la galería de fotos -->
+  <a href="galeria.html" class="gallery-btn">
+    <div class="camera-icon">
+      <div class="camera-lens"></div>
+      <div class="camera-heart">💕</div>
+    </div>
+  </a>
+
+  <!-- Mensaje flotante -->
+  <div class="floating-message">
+    ¡Haz clic en el sobre para leer mi carta! 💕
+  </div>
+
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <div class="envelope" onclick="createConfetti()">
+    <div class="envelope-inner">
+      <div class="envelope-front">
+        <div class="address">
+          <p><strong>Para:</strong> Mi princesa 💖</p>
+          <p><strong>De:</strong> Juanca 🥰</p>
+          <p>💌 Haz clic para abrir 💌</p>
+        </div>
+      </div>
+      <div class="envelope-back">
+        <div class="top-fold"></div>
+        <div class="letter">
+          <img src="https://img.freepik.com/vector-premium/pulgar-dedos-imprimir-marca-huella-dactilar-amor-corazon_53500-1839.jpg" alt="Huella de amor">
+          <p style="font-family: 'Dancing Script', cursive; font-size: 1.1em; line-height: 1.5;">
+            Mi amor, cada día contigo es una aventura hermosa. Eres mi sol en los días grises y mi risa en los momentos difíciles. Gracias por ser mi compañera, mi alegría, y mi todo.
+          </p>
+          <span class="highlight">¡Te amo infinito y más allá! 💗✨</span>
+          <img src="https://img.freepik.com/fotos-premium/imagen-flores-amarillas-palabras-sol-citadas-ella_1191871-60686.jpg" alt="Flores">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio oculto -->
+  <audio id="backgroundMusic" autoplay>
+    <source src="audio4.mp3" type="audio/wav">
+  </audio>
+
+  <script>
+    const heartsContainer = document.getElementById('heartsContainer');
+    const colors = ['variant1', 'variant2', 'variant3', 'variant4'];
+    const sizes = ['small', 'medium', 'large'];
+    let musicPlaying = false;
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.classList.add(sizes[Math.floor(Math.random() * sizes.length)]);
+      heart.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+      heart.style.left = Math.random() * 100 + '%';
+      const duration = 6 + Math.random() * 4;
+      heart.style.animationDuration = duration + 's';
+      heart.style.animationDelay = Math.random() * 2 + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => {
+        if (heart.parentNode) heart.parentNode.removeChild(heart);
+      }, (duration + 2) * 1000);
+    }
+
+    function createStar() {
+      const star = document.createElement('div');
+      star.className = 'star';
+      star.style.left = Math.random() * 100 + '%';
+      star.style.top = Math.random() * 100 + '%';
+      star.style.animationDelay = Math.random() * 3 + 's';
+      heartsContainer.appendChild(star);
+      setTimeout(() => {
+        if (star.parentNode) star.parentNode.removeChild(star);
+      }, 3000);
+    }
+
+    function createConfetti() {
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.background = colors[Math.floor(Math.random() * colors.length)] === 'variant1' ? '#ff4757' : 
+                                     colors[Math.floor(Math.random() * colors.length)] === 'variant2' ? '#ff6b6b' : 
+                                     colors[Math.floor(Math.random() * colors.length)] === 'variant3' ? '#ff7675' : '#fd79a8';
+          heartsContainer.appendChild(confetti);
+          setTimeout(() => {
+            if (confetti.parentNode) confetti.parentNode.removeChild(confetti);
+          }, 3000);
+        }, i * 100);
+      }
+    }
+
+    function toggleMusic() {
+      const music = document.getElementById('backgroundMusic');
+      const btn = document.getElementById('musicBtn');
+      
+      if (musicPlaying) {
+        music.pause();
+        btn.textContent = '🎵';
+        musicPlaying = false;
+      } else {
+        music.play();
+        btn.textContent = '🔇';
+        musicPlaying = true;
+      }
+    }
+
+    function startHeartAnimation() {
+      createHeart();
+      setTimeout(startHeartAnimation, 200 + Math.random() * 400);
+    }
+
+    function startStarAnimation() {
+      createStar();
+      setTimeout(startStarAnimation, 2000 + Math.random() * 3000);
+    }
+
+    // Iniciar animaciones
+    startHeartAnimation();
+    startStarAnimation();
+    
+    // Crear corazones y estrellas iniciales
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createHeart, i * 200);
+    }
+    
+    for (let i = 0; i < 5; i++) {
+      setTimeout(createStar, i * 1000);
+    }
+
+    // Efecto de hover en el sobre
+    const envelope = document.querySelector('.envelope');
+    envelope.addEventListener('mouseenter', () => {
+      createConfetti();
+    });
+
+    // Mensaje de bienvenida
+    setTimeout(() => {
+      const message = document.querySelector('.floating-message');
+      message.style.animation = 'floatMessage 4s ease-in-out infinite, fadeIn 1s ease-in';
+    }, 1000);
+  </script>
+</body>
+</html>
