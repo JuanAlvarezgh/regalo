@@ -359,22 +359,165 @@
       transform: translateY(0);
     }
 
-    /* Confeti */
-    .confetti {
+    /* Confeti mejorado */
+    .confetti-container {
       position: fixed;
-      width: 10px;
-      height: 10px;
-      background: #ff6b81;
-      animation: confettiFall 3s linear infinite;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+      overflow: hidden;
     }
 
-    @keyframes confettiFall {
+    .confetti-piece {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      opacity: 0.9;
+    }
+
+    .confetti-circle {
+      border-radius: 50%;
+    }
+
+    .confetti-square {
+      border-radius: 2px;
+    }
+
+    .confetti-triangle {
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 12px solid;
+    }
+
+    .confetti-star {
+      position: relative;
+      display: inline-block;
+      width: 0;
+      height: 0;
+    }
+
+    .confetti-star:before,
+    .confetti-star:after {
+      content: '';
+      position: absolute;
+      left: -6px;
+      top: -4px;
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-bottom: 8px solid;
+      transform: rotate(35deg);
+    }
+
+    .confetti-star:after {
+      transform: rotate(-35deg);
+    }
+
+    .confetti-heart {
+      width: 12px;
+      height: 10px;
+      position: relative;
+      transform: rotate(-45deg);
+    }
+
+    .confetti-heart:before,
+    .confetti-heart:after {
+      content: '';
+      width: 6px;
+      height: 10px;
+      position: absolute;
+      left: 6px;
+      background: inherit;
+      border-radius: 6px 6px 0 0;
+      transform: rotate(-45deg);
+      transform-origin: 0 100%;
+    }
+
+    .confetti-heart:after {
+      left: 0;
+      transform: rotate(45deg);
+      transform-origin: 100% 100%;
+    }
+
+    @keyframes confetti-fall-1 {
       0% {
-        transform: translateY(-100vh) rotate(0deg);
+        transform: translateY(-100vh) rotate(0deg) scale(1);
         opacity: 1;
       }
       100% {
-        transform: translateY(100vh) rotate(360deg);
+        transform: translateY(100vh) rotate(360deg) scale(0.8);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confetti-fall-2 {
+      0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(50vh) rotate(180deg) scale(1.2);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.6);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confetti-fall-3 {
+      0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1) translateX(0);
+        opacity: 1;
+      }
+      25% {
+        transform: translateY(25vh) rotate(90deg) scale(1.1) translateX(20px);
+      }
+      50% {
+        transform: translateY(50vh) rotate(180deg) scale(0.9) translateX(-20px);
+      }
+      75% {
+        transform: translateY(75vh) rotate(270deg) scale(1.2) translateX(15px);
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.7) translateX(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes confetti-sway {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      25% { transform: translateX(20px) rotate(90deg); }
+      50% { transform: translateX(-15px) rotate(180deg); }
+      75% { transform: translateX(10px) rotate(270deg); }
+    }
+
+    /* Sparkles para efecto extra */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #fff;
+      border-radius: 50%;
+      animation: sparkle-twinkle 1s ease-in-out infinite alternate;
+    }
+
+    @keyframes sparkle-twinkle {
+      0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1) rotate(180deg);
         opacity: 0;
       }
     }
@@ -584,6 +727,9 @@
     </div>
   </div>
 
+  <!-- Container para el confeti -->
+  <div class="confetti-container" id="confettiContainer"></div>
+
   <!-- Overlay de la carta -->
   <div class="carta-overlay" id="cartaOverlay">
     <div class="carta-container">
@@ -667,29 +813,149 @@
       cartaAbierta = false;
     }
 
-    function createConfetti() {
+    function createAdvancedConfetti() {
+      const confettiContainer = document.getElementById('confettiContainer');
+      const colors = ['#ff6b81', '#ffeaa7', '#fd79a8', '#74b9ff', '#a29bfe', '#fdcb6e', '#ff9ff3', '#54a0ff', '#5f27cd', '#00d2d3'];
+      const shapes = ['circle', 'square', 'triangle', 'star', 'heart'];
+      const animations = ['confetti-fall-1', 'confetti-fall-2', 'confetti-fall-3'];
+      
+      // Crear múltiples oleadas de confeti
+      for (let wave = 0; wave < 3; wave++) {
+        setTimeout(() => {
+          for (let i = 0; i < 80; i++) {
+            const confetti = document.createElement('div');
+            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const animation = animations[Math.floor(Math.random() * animations.length)];
+            
+            confetti.className = `confetti-piece confetti-${shape}`;
+            
+            // Posición inicial aleatoria
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-20px';
+            
+            // Color basado en la forma
+            if (shape === 'triangle') {
+              confetti.style.borderBottomColor = color;
+            } else if (shape === 'star') {
+              confetti.style.setProperty('--star-color', color);
+              confetti.innerHTML = `<style>
+                .confetti-star:before, .confetti-star:after {
+                  border-bottom-color: ${color};
+                }
+              </style>`;
+            } else {
+              confetti.style.backgroundColor = color;
+            }
+            
+            // Animación y duración aleatoria
+            const duration = (Math.random() * 3 + 3) + 's';
+            const delay = Math.random() * 0.5 + 's';
+            
+            confetti.style.animation = `${animation} ${duration} ${delay} ease-out forwards`;
+            confetti.style.transform = `scale(${Math.random() * 0.5 + 0.8})`;
+            
+            // Añadir efecto de rotación adicional
+            if (Math.random() > 0.5) {
+              confetti.style.animation += `, confetti-sway ${duration} ${delay} ease-in-out infinite`;
+            }
+            
+            confettiContainer.appendChild(confetti);
+            
+            // Remover después de la animación
+            setTimeout(() => {
+              if (confetti.parentNode) {
+                confetti.parentNode.removeChild(confetti);
+              }
+            }, 6000);
+          }
+          
+          // Agregar sparkles para efecto extra
+          for (let j = 0; j < 30; j++) {
+            setTimeout(() => {
+              createSparkle();
+            }, Math.random() * 2000);
+          }
+        }, wave * 500);
+      }
+    }
+
+    function createSparkle() {
+      const confettiContainer = document.getElementById('confettiContainer');
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = Math.random() * 1 + 's';
+      
+      confettiContainer.appendChild(sparkle);
+      
+      setTimeout(() => {
+        if (sparkle.parentNode) {
+          sparkle.parentNode.removeChild(sparkle);
+        }
+      }, 2000);
+    }
+
+    // Función para crear explosión de confeti desde un punto específico
+    function createConfettiExplosion(x, y) {
+      const confettiContainer = document.getElementById('confettiContainer');
       const colors = ['#ff6b81', '#ffeaa7', '#fd79a8', '#74b9ff', '#a29bfe', '#fdcb6e'];
       
-      for (let i = 0; i < 50; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.animationDelay = Math.random() * 3 + 's';
-        confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-        document.body.appendChild(confetti);
+      for (let i = 0; i < 30; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'confetti-piece confetti-circle';
+        particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.width = (Math.random() * 8 + 4) + 'px';
+        particle.style.height = particle.style.width;
         
-        setTimeout(() => {
-          if (confetti.parentNode) {
-            confetti.parentNode.removeChild(confetti);
+        const angle = (Math.PI * 2 * i) / 30;
+        const velocity = Math.random() * 150 + 50;
+        const gravity = 0.8;
+        const friction = 0.95;
+        
+        let vx = Math.cos(angle) * velocity;
+        let vy = Math.sin(angle) * velocity;
+        let posX = x;
+        let posY = y;
+        
+        confettiContainer.appendChild(particle);
+        
+        function animateParticle() {
+          vx *= friction;
+          vy = vy * friction + gravity;
+          posX += vx * 0.02;
+          posY += vy * 0.02;
+          
+          particle.style.transform = `translate(${posX - x}px, ${posY - y}px) rotate(${posX * 0.1}deg)`;
+          particle.style.opacity = Math.max(0, 1 - (posY - y) / 300);
+          
+          if (posY < window.innerHeight + 100 && particle.style.opacity > 0) {
+            requestAnimationFrame(animateParticle);
+          } else {
+            if (particle.parentNode) {
+              particle.parentNode.removeChild(particle);
+            }
           }
-        }, 5000);
+        }
+        
+        requestAnimationFrame(animateParticle);
       }
     }
 
     function blowCandles() {
       const flames = document.querySelectorAll('.flame');
       const button = document.querySelector('.blow-button');
+      
+      // Crear explosión de confeti desde el botón
+      const buttonRect = button.getBoundingClientRect();
+      const buttonCenterX = buttonRect.left + buttonRect.width / 2;
+      const buttonCenterY = buttonRect.top + buttonRect.height / 2;
+      
+      createConfettiExplosion(buttonCenterX, buttonCenterY);
       
       flames.forEach(flame => {
         flame.style.animation = 'none';
@@ -700,7 +966,10 @@
       button.textContent = '🎉 ¡Deseo cumplido!';
       button.style.background = 'linear-gradient(45deg, #00b894, #00cec9)';
       
-      createConfetti();
+      // Confeti avanzado después de un pequeño delay
+      setTimeout(() => {
+        createAdvancedConfetti();
+      }, 300);
       
       setTimeout(() => {
         alert('🎊 ¡Que todos tus deseos se hagan realidad! Te amo mucho 💕');
@@ -714,11 +983,39 @@
         });
         button.textContent = '🌬️ Sopla las velas y pide un deseo';
         button.style.background = 'linear-gradient(45deg, #ff6b81, #ff8fa3)';
-      }, 3000);
+      }, 5000);
+    }
+
+    // Confeti inicial más sutil
+    function createInitialConfetti() {
+      const confettiContainer = document.getElementById('confettiContainer');
+      const colors = ['#ff6b81', '#ffeaa7', '#fd79a8', '#74b9ff', '#a29bfe'];
+      
+      for (let i = 0; i < 20; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti-piece confetti-circle';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + '%';
+          confetti.style.top = '-20px';
+          confetti.style.width = (Math.random() * 6 + 4) + 'px';
+          confetti.style.height = confetti.style.width;
+          confetti.style.animation = `confetti-fall-1 ${Math.random() * 2 + 4}s ease-out forwards`;
+          confetti.style.opacity = '0.7';
+          
+          confettiContainer.appendChild(confetti);
+          
+          setTimeout(() => {
+            if (confetti.parentNode) {
+              confetti.parentNode.removeChild(confetti);
+            }
+          }, 6000);
+        }, Math.random() * 3000);
+      }
     }
 
     // Confeti inicial
-    setTimeout(createConfetti, 1000);
+    setTimeout(createInitialConfetti, 1000);
 
     // Cerrar carta con ESC
     document.addEventListener('keydown', function(event) {
