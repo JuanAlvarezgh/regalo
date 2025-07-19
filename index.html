@@ -154,8 +154,6 @@
       box-shadow: 0 0 20px #ff0040;
     }
 
-    /* Texto de información hacker - ELIMINADO */
-
     /* Botón de galería con cámara */
     .gallery-btn {
       position: fixed;
@@ -400,7 +398,7 @@
       .envelope {
         --envelope-width: 600px;
         --envelope-height: 350px;
-        --letter-font-size: 1.6rem;
+        --letter-font-size: 1.4rem;
       }
     }
 
@@ -408,7 +406,8 @@
       --envelope-transform: rotateY(180deg);
       --fold-rotate: rotateX(180deg);
       --fold-zindex: 0;
-      --letter-height: calc(var(--envelope-height) * 1.75);
+      --letter-height: auto;
+      --letter-min-height: calc(var(--envelope-height) * 2.2);
       filter: drop-shadow(0 15px 40px rgba(0,0,0,0.3));
     }
 
@@ -483,37 +482,64 @@
       left: 50%;
       width: 90%;
       height: var(--letter-height, calc(var(--envelope-height) - 2rem));
+      min-height: var(--letter-min-height, auto);
+      max-height: calc(100vh - 100px);
       font-size: var(--letter-font-size);
       transform: translateX(-50%);
       background: linear-gradient(135deg, var(--letter-clr-bg), #fff9f9);
-      padding: 2em 3em;
+      padding: 1.5em 2em;
       text-align: center;
       z-index: 2;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       color: var(--letter-clr-text);
       transition: var(--duration);
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       border-radius: 8px;
+      overflow-y: auto;
+      gap: 1rem;
     }
 
     .letter img {
-      max-width: 100px;
-      margin-bottom: 1rem;
+      max-width: 80px;
+      height: 80px;
+      object-fit: cover;
       border-radius: 50%;
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+    }
+
+    .letter-content {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.1em;
+      line-height: 1.6;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
     }
 
     .highlight {
       display: block;
-      font-size: 1.5rem;
+      font-size: 1.3rem;
       color: #ff4d6d;
-      margin-top: 0.5rem;
       font-weight: bold;
       font-family: 'Dancing Script', cursive;
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      flex-shrink: 0;
+    }
+
+    .letter-flowers {
+      max-width: 100px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      flex-shrink: 0;
     }
 
     /* Mensaje romántico flotante */
@@ -557,6 +583,33 @@
         opacity: 0;
       }
     }
+
+    /* Ajustes para móviles */
+    @media (max-width: 480px) {
+      .envelope {
+        --envelope-width: 280px;
+        --envelope-height: 180px;
+        --letter-font-size: 0.9rem;
+      }
+      
+      .envelope:hover {
+        --letter-min-height: calc(var(--envelope-height) * 2.5);
+      }
+      
+      .letter {
+        padding: 1rem 1.5rem;
+        max-height: calc(100vh - 50px);
+      }
+      
+      .letter img {
+        max-width: 60px;
+        height: 60px;
+      }
+      
+      .highlight {
+        font-size: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -594,11 +647,15 @@
         <div class="top-fold"></div>
         <div class="letter">
           <img src="https://img.freepik.com/vector-premium/pulgar-dedos-imprimir-marca-huella-dactilar-amor-corazon_53500-1839.jpg" alt="Huella de amor">
-          <p style="font-family: 'Dancing Script', cursive; font-size: 1.1em; line-height: 1.5;">
-            Mi amor, cada día contigo es una aventura hermosa. Eres mi sol en los días grises y mi risa en los momentos difíciles. Gracias por ser mi compañera, mi alegría, y mi todo.
-          </p>
-          <span class="highlight">¡Te amo infinito y más allá! 💗✨</span>
-          <img src="https://img.freepik.com/fotos-premium/imagen-flores-amarillas-palabras-sol-citadas-ella_1191871-60686.jpg" alt="Flores">
+          
+          <div class="letter-content">
+            <p>
+              Mi amor, cada día contigo es una aventura hermosa. Eres mi sol en los días grises y mi risa en los momentos difíciles. Gracias por ser mi compañera, mi alegría, y mi todo.
+            </p>
+            <span class="highlight">¡Te amo infinito y más allá! 💗✨</span>
+          </div>
+          
+          <img class="letter-flowers" src="https://img.freepik.com/fotos-premium/imagen-flores-amarillas-palabras-sol-citadas-ella_1191871-60686.jpg" alt="Flores">
         </div>
       </div>
     </div>
