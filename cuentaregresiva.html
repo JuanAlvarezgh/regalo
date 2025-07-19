@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Cuenta Regresiva - Para Mi Amor</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;600;700&display=swap');
@@ -19,6 +19,7 @@
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            -webkit-text-size-adjust: 100%;
         }
         
         /* Estrellas de fondo */
@@ -77,10 +78,10 @@
         /* Luna */
         .moon {
             position: fixed;
-            top: 10%;
-            right: 15%;
-            width: 120px;
-            height: 120px;
+            top: 8%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
             background: linear-gradient(135deg, #f5f5dc 0%, #fffacd 100%);
             border-radius: 50%;
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
@@ -93,8 +94,8 @@
             position: absolute;
             top: 20%;
             left: 25%;
-            width: 15px;
-            height: 10px;
+            width: 12px;
+            height: 8px;
             background: rgba(200, 200, 200, 0.3);
             border-radius: 50%;
         }
@@ -104,8 +105,8 @@
             position: absolute;
             top: 60%;
             left: 60%;
-            width: 10px;
-            height: 8px;
+            width: 8px;
+            height: 6px;
             background: rgba(200, 200, 200, 0.3);
             border-radius: 50%;
         }
@@ -121,7 +122,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 100px;
+            height: 80px;
             background: linear-gradient(180deg, #1e4a1e 0%, #0f2a0f 100%);
             z-index: 3;
         }
@@ -129,12 +130,12 @@
         /* Gatitos */
         .cats-container {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 4;
             display: flex;
-            gap: 30px;
+            gap: 20px;
             align-items: flex-end;
         }
         
@@ -157,10 +158,10 @@
         }
         
         .cat-body {
-            width: 80px;
-            height: 60px;
+            width: 60px;
+            height: 45px;
             background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
-            border-radius: 50px 50px 30px 30px;
+            border-radius: 40px 40px 25px 25px;
             position: relative;
         }
         
@@ -169,45 +170,45 @@
         }
         
         .cat-head {
-            width: 60px;
-            height: 55px;
+            width: 45px;
+            height: 40px;
             background: inherit;
-            border-radius: 50px 50px 40px 40px;
+            border-radius: 40px 40px 30px 30px;
             position: absolute;
-            top: -35px;
+            top: -25px;
             left: 50%;
             transform: translateX(-50%);
         }
         
         .cat-ear {
-            width: 20px;
-            height: 25px;
+            width: 15px;
+            height: 18px;
             background: inherit;
-            border-radius: 50px 50px 0 0;
+            border-radius: 40px 40px 0 0;
             position: absolute;
-            top: -15px;
+            top: -12px;
         }
         
         .cat-ear.left {
-            left: 8px;
+            left: 6px;
             transform: rotate(-20deg);
         }
         
         .cat-ear.right {
-            right: 8px;
+            right: 6px;
             transform: rotate(20deg);
         }
         
         .cat-ear::before {
             content: '';
             position: absolute;
-            top: 5px;
+            top: 3px;
             left: 50%;
             transform: translateX(-50%);
-            width: 8px;
-            height: 12px;
+            width: 6px;
+            height: 8px;
             background: #ffb6c1;
-            border-radius: 50px 50px 0 0;
+            border-radius: 40px 40px 0 0;
         }
         
         .cat-face {
@@ -219,31 +220,31 @@
         
         .cat-eyes {
             display: flex;
-            gap: 12px;
+            gap: 8px;
             justify-content: center;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
         
         .cat-eye {
-            width: 8px;
-            height: 12px;
+            width: 6px;
+            height: 8px;
             background: #000;
             border-radius: 50%;
             animation: blink 4s infinite;
         }
         
         @keyframes blink {
-            0%, 95% { height: 12px; }
+            0%, 95% { height: 8px; }
             97% { height: 2px; }
-            100% { height: 12px; }
+            100% { height: 8px; }
         }
         
         .cat-nose {
-            width: 6px;
-            height: 4px;
+            width: 4px;
+            height: 3px;
             background: #ff69b4;
             border-radius: 50%;
-            margin: 0 auto 4px;
+            margin: 0 auto 3px;
         }
         
         .cat2 .cat-nose {
@@ -261,7 +262,7 @@
         
         .whisker {
             position: absolute;
-            width: 18px;
+            width: 12px;
             height: 1px;
             background: #333;
             border-radius: 1px;
@@ -269,40 +270,40 @@
         
         .whisker.left-top {
             top: 45%;
-            left: -18px;
+            left: -12px;
             transform: rotate(15deg);
             transform-origin: right center;
         }
         
         .whisker.left-bottom {
             top: 55%;
-            left: -18px;
+            left: -12px;
             transform: rotate(-15deg);
             transform-origin: right center;
         }
         
         .whisker.right-top {
             top: 45%;
-            right: -18px;
+            right: -12px;
             transform: rotate(-15deg);
             transform-origin: left center;
         }
         
         .whisker.right-bottom {
             top: 55%;
-            right: -18px;
+            right: -12px;
             transform: rotate(15deg);
             transform-origin: left center;
         }
         
         .cat-tail {
             position: absolute;
-            right: -15px;
-            bottom: 10px;
-            width: 35px;
-            height: 8px;
+            right: -10px;
+            bottom: 8px;
+            width: 25px;
+            height: 6px;
             background: inherit;
-            border-radius: 20px;
+            border-radius: 15px;
             transform-origin: left center;
             animation: tailWag 2s ease-in-out infinite alternate;
         }
@@ -320,15 +321,19 @@
             transform: translate(-50%, -50%);
             text-align: center;
             z-index: 5;
+            width: 100%;
+            padding: 0 20px;
+            max-width: 600px;
         }
         
         .countdown-title {
             color: #fff;
-            font-size: 2.5em;
+            font-size: 2em;
             font-weight: 700;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
             animation: titlePulse 2s ease-in-out infinite alternate;
+            line-height: 1.2;
         }
         
         @keyframes titlePulse {
@@ -337,18 +342,20 @@
         }
         
         .countdown-display {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .countdown-item {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 20px;
-            min-width: 100px;
+            border-radius: 15px;
+            padding: 15px 10px;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             animation: float 3s ease-in-out infinite;
@@ -361,33 +368,32 @@
         
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
         
         .countdown-number {
-            font-size: 3em;
+            font-size: 2.2em;
             font-weight: 700;
             color: #ff69b4;
             text-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
             display: block;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
+            line-height: 1;
         }
         
         .countdown-label {
             color: #fff;
-            font-size: 1.2em;
+            font-size: 0.9em;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
         
         .countdown-message {
             color: #fff;
-            font-size: 1.5em;
+            font-size: 1.3em;
             font-weight: 400;
-            max-width: 600px;
-            margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.5;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
@@ -395,7 +401,7 @@
         .heart {
             position: fixed;
             color: #ff69b4;
-            font-size: 20px;
+            font-size: 16px;
             animation: floatUp 6s linear infinite;
             pointer-events: none;
             z-index: 6;
@@ -412,50 +418,189 @@
             }
         }
         
-        /* Responsivo */
-        @media (max-width: 768px) {
+        /* iPhone 16 específico (393px x 852px) */
+        @media (max-width: 393px) and (max-height: 852px) {
             .moon {
-                width: 80px;
-                height: 80px;
+                width: 70px;
+                height: 70px;
                 top: 5%;
-                right: 10%;
+                right: 8%;
+            }
+            
+            .countdown-title {
+                font-size: 1.6em;
+                margin-bottom: 20px;
+            }
+            
+            .countdown-display {
+                max-width: 280px;
+                gap: 12px;
+            }
+            
+            .countdown-item {
+                padding: 12px 8px;
+                border-radius: 12px;
+            }
+            
+            .countdown-number {
+                font-size: 1.8em;
+            }
+            
+            .countdown-label {
+                font-size: 0.8em;
+            }
+            
+            .countdown-message {
+                font-size: 1.1em;
+                padding: 0 15px;
+            }
+            
+            .cats-container {
+                gap: 15px;
+                bottom: 15px;
+            }
+            
+            .cat-body {
+                width: 50px;
+                height: 38px;
+            }
+            
+            .cat-head {
+                width: 38px;
+                height: 34px;
+                top: -20px;
+            }
+            
+            .grass {
+                height: 60px;
+            }
+        }
+        
+        /* iPhone 16 Plus/Pro Max (430px x 932px) */
+        @media (min-width: 394px) and (max-width: 430px) and (max-height: 932px) {
+            .moon {
+                width: 85px;
+                height: 85px;
+                top: 6%;
+                right: 8%;
             }
             
             .countdown-title {
                 font-size: 1.8em;
+                margin-bottom: 22px;
             }
             
             .countdown-display {
-                flex-wrap: wrap;
-                gap: 15px;
+                max-width: 320px;
+                gap: 14px;
             }
             
             .countdown-item {
-                min-width: 80px;
-                padding: 15px;
+                padding: 14px 10px;
             }
             
             .countdown-number {
                 font-size: 2em;
             }
             
-            .countdown-label {
-                font-size: 1em;
+            .countdown-message {
+                font-size: 1.2em;
+            }
+        }
+        
+        /* Tablets y pantallas más grandes */
+        @media (min-width: 768px) {
+            .countdown-display {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 500px;
+                gap: 20px;
+            }
+            
+            .countdown-title {
+                font-size: 2.5em;
+            }
+            
+            .countdown-number {
+                font-size: 3em;
             }
             
             .countdown-message {
-                font-size: 1.2em;
-                padding: 0 20px;
+                font-size: 1.5em;
+            }
+            
+            .moon {
+                width: 120px;
+                height: 120px;
+                top: 10%;
+                right: 15%;
+            }
+            
+            .cats-container {
+                gap: 30px;
+                bottom: 30px;
             }
             
             .cat-body {
-                width: 60px;
-                height: 45px;
+                width: 80px;
+                height: 60px;
             }
             
             .cat-head {
-                width: 45px;
-                height: 40px;
+                width: 60px;
+                height: 55px;
+                top: -35px;
+            }
+        }
+        
+        /* Orientación horizontal en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .countdown-container {
+                top: 45%;
+                padding: 0 15px;
+            }
+            
+            .countdown-title {
+                font-size: 1.4em;
+                margin-bottom: 15px;
+            }
+            
+            .countdown-display {
+                grid-template-columns: repeat(4, 1fr);
+                max-width: 400px;
+                gap: 10px;
+                margin-bottom: 15px;
+            }
+            
+            .countdown-item {
+                padding: 8px 5px;
+            }
+            
+            .countdown-number {
+                font-size: 1.4em;
+                margin-bottom: 3px;
+            }
+            
+            .countdown-label {
+                font-size: 0.7em;
+            }
+            
+            .countdown-message {
+                font-size: 1em;
+            }
+            
+            .cats-container {
+                bottom: 10px;
+            }
+            
+            .moon {
+                width: 60px;
+                height: 60px;
+                top: 5%;
+                right: 5%;
+            }
+            
+            .grass {
+                height: 50px;
             }
         }
     </style>
@@ -543,10 +688,13 @@
     </div>
 
     <script>
-        // Crear estrellas
+        // Crear estrellas (menos en móviles para mejor rendimiento)
         function createStars() {
             const starsContainer = document.querySelector('.stars');
-            for (let i = 0; i < 100; i++) {
+            const isMobile = window.innerWidth <= 768;
+            const starCount = isMobile ? 50 : 100;
+            
+            for (let i = 0; i < starCount; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 star.style.left = Math.random() * 100 + '%';
@@ -559,8 +707,11 @@
             }
         }
 
-        // Crear estrellas fugaces
+        // Crear estrellas fugaces (menos frecuentes en móviles)
         function createShootingStars() {
+            const isMobile = window.innerWidth <= 768;
+            const interval = isMobile ? 5000 : 3000;
+            
             setInterval(() => {
                 const shootingStar = document.createElement('div');
                 shootingStar.className = 'shooting-star';
@@ -574,25 +725,28 @@
                 setTimeout(() => {
                     shootingStar.remove();
                 }, 3000);
-            }, 3000);
+            }, interval);
         }
 
-        // Crear corazones flotantes
+        // Crear corazones flotantes (menos frecuentes en móviles)
         function createFloatingHearts() {
+            const isMobile = window.innerWidth <= 768;
+            const interval = isMobile ? 3000 : 2000;
+            
             setInterval(() => {
                 const heart = document.createElement('div');
                 heart.className = 'heart';
                 heart.innerHTML = '💖';
                 heart.style.left = Math.random() * 100 + '%';
                 heart.style.bottom = '0px';
-                heart.style.fontSize = Math.random() * 10 + 15 + 'px';
+                heart.style.fontSize = Math.random() * 8 + 12 + 'px';
                 heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
                 document.body.appendChild(heart);
                 
                 setTimeout(() => {
                     heart.remove();
                 }, 6000);
-            }, 2000);
+            }, interval);
         }
 
         // Función de cuenta regresiva
@@ -623,12 +777,28 @@
             }, 1000);
         }
 
+        // Optimización para dispositivos móviles
+        function optimizeForMobile() {
+            const isMobile = window.innerWidth <= 768;
+            
+            if (isMobile) {
+                // Reducir animaciones en dispositivos móviles para mejor rendimiento
+                document.documentElement.style.setProperty('--animation-duration', '4s');
+            }
+        }
+
         // Inicializar todo
         document.addEventListener('DOMContentLoaded', () => {
+            optimizeForMobile();
             createStars();
             createShootingStars();
             createFloatingHearts();
             startCountdown();
+        });
+
+        // Optimizar al cambiar orientación
+        window.addEventListener('orientationchange', () => {
+            setTimeout(optimizeForMobile, 500);
         });
     </script>
 </body>
