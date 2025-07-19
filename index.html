@@ -477,51 +477,56 @@
     }
 
     .letter {
-      position: absolute;
-      bottom: 5px;
-      left: 50%;
-      width: 90%;
-      height: var(--letter-height, calc(var(--envelope-height) - 2rem));
-      min-height: var(--letter-min-height, auto);
-      max-height: calc(100vh - 100px);
-      font-size: var(--letter-font-size);
-      transform: translateX(-50%);
-      background: linear-gradient(135deg, var(--letter-clr-bg), #fff9f9);
-      padding: 1.5em 2em;
-      text-align: center;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      color: var(--letter-clr-text);
-      transition: var(--duration);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      border-radius: 8px;
-      overflow-y: auto;
-      gap: 1rem;
-    }
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  width: 90%;
+  height: var(--letter-height, calc(var(--envelope-height) - 2rem));
+  min-height: var(--letter-min-height, auto);
+  max-height: calc(100vh - 100px);
+  font-size: var(--letter-font-size);
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--letter-clr-bg), #fff9f9);
+  padding: 3em 2em 1.5em 2em; /* espacio superior aumentado */
+  text-align: center;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  color: var(--letter-clr-text);
+  transition: var(--duration);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  overflow-y: auto;
+  gap: 1rem;
+}
 
-    .letter img {
-      max-width: 80px;
-      height: 80px;
-      object-fit: cover;
-      border-radius: 50%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      flex-shrink: 0;
-    }
+.letter img {
+  max-width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
 
-    .letter-content {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.1em;
-      line-height: 1.6;
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1rem;
-    }
+/* Aplica solo a la primera imagen dentro de .letter */
+.letter img:first-of-type {
+  margin-top: 1.5rem;
+}
+
+.letter-content {
+  font-family: 'Dancing Script', cursive;
+  font-size: 1.1em;
+  line-height: 1.6;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
 
     .highlight {
       display: block;
