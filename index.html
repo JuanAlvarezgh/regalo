@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Para mi amor 💖</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&family=Dancing+Script:wght@400;700&family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
   
   <style>
     * {
@@ -20,6 +20,12 @@
       animation: gradientShift 8s ease infinite;
       overflow: hidden;
       height: 100vh;
+      transition: all 0.5s ease;
+    }
+
+    body.hacker-mode {
+      background: #000;
+      color: #00ff00;
     }
 
     @keyframes gradientShift {
@@ -27,6 +33,128 @@
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
+
+    /* Botón secreto - Easter Egg oculto */
+    .secret-btn {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: transparent;
+      color: transparent;
+      border: none;
+      padding: 20px;
+      font-size: 0.1px;
+      cursor: pointer;
+      z-index: 1001;
+      opacity: 0.05;
+      transition: opacity 0.3s ease;
+      width: 30px;
+      height: 30px;
+    }
+
+    .secret-btn:hover {
+      opacity: 0.3;
+    }
+
+    /* Overlay de modo hacker */
+    .hacker-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      z-index: 9999;
+      display: none;
+      overflow: hidden;
+    }
+
+    .hacker-overlay.active {
+      display: block;
+    }
+
+    /* Lluvia de "TE AMO" */
+    .love-rain {
+      position: absolute;
+      color: #ff0040;
+      font-family: 'Fira Code', monospace;
+      font-weight: bold;
+      font-size: 18px;
+      text-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
+      animation: hackerFall linear infinite;
+      opacity: 0;
+      white-space: nowrap;
+    }
+
+    @keyframes hackerFall {
+      0% {
+        opacity: 0;
+        transform: translateY(-100px) rotateZ(0deg);
+      }
+      5% {
+        opacity: 1;
+      }
+      95% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(calc(100vh + 100px)) rotateZ(360deg);
+      }
+    }
+
+    /* Variaciones de tamaño */
+    .love-rain.small {
+      font-size: 14px;
+    }
+    .love-rain.medium {
+      font-size: 18px;
+    }
+    .love-rain.large {
+      font-size: 24px;
+    }
+    .love-rain.xlarge {
+      font-size: 32px;
+    }
+
+    /* Variaciones de color */
+    .love-rain.red {
+      color: #ff0040;
+      text-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
+    }
+    .love-rain.pink {
+      color: #ff1744;
+      text-shadow: 0 0 10px #ff1744, 0 0 20px #ff1744, 0 0 30px #ff1744;
+    }
+    .love-rain.crimson {
+      color: #dc143c;
+      text-shadow: 0 0 10px #dc143c, 0 0 20px #dc143c, 0 0 30px #dc143c;
+    }
+
+    /* Botón de salir del modo hacker */
+    .exit-hacker {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 0, 64, 0.8);
+      color: white;
+      border: 2px solid #ff0040;
+      padding: 10px 20px;
+      border-radius: 5px;
+      font-family: 'Fira Code', monospace;
+      cursor: pointer;
+      z-index: 10000;
+      transition: all 0.3s ease;
+      font-weight: bold;
+      text-shadow: 0 0 10px #ff0040;
+    }
+
+    .exit-hacker:hover {
+      background: rgba(255, 0, 64, 1);
+      box-shadow: 0 0 20px #ff0040;
+    }
+
+    /* Texto de información hacker - ELIMINADO */
 
     /* Botón de galería con cámara */
     .gallery-btn {
@@ -391,7 +519,7 @@
     /* Mensaje romántico flotante */
     .floating-message {
       position: fixed;
-      bottom: 30px;
+      bottom: 80px;
       left: 50%;
       transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.9);
@@ -448,6 +576,9 @@
     ¡Haz clic en el sobre para leer mi carta! 💕
   </div>
 
+  <!-- Botón secreto - Easter Egg (casi invisible) -->
+  <button class="secret-btn" onclick="activateHackerMode()"></button>
+
   <div class="hearts-container" id="heartsContainer"></div>
 
   <div class="envelope" onclick="createConfetti()">
@@ -473,6 +604,11 @@
     </div>
   </div>
 
+  <!-- Overlay de modo hacker -->
+  <div class="hacker-overlay" id="hackerOverlay">
+    <button class="exit-hacker" onclick="deactivateHackerMode()">SALIR [ESC]</button>
+  </div>
+
   <!-- Audio oculto -->
   <audio id="backgroundMusic" autoplay>
     <source src="Audio6.mp3" type="audio/wav">
@@ -482,7 +618,12 @@
     const heartsContainer = document.getElementById('heartsContainer');
     const colors = ['variant1', 'variant2', 'variant3', 'variant4'];
     const sizes = ['small', 'medium', 'large'];
+    const loveMessages = ['TE AMO', 'I LOVE YOU', 'TI AMO', '사랑해', 'JE T\'AIME', '愛してる', 'TE QUIERO'];
+    const hackerColors = ['red', 'pink', 'crimson'];
+    const hackerSizes = ['small', 'medium', 'large', 'xlarge'];
     let musicPlaying = false;
+    let hackerMode = false;
+    let loveRainInterval;
 
     function createHeart() {
       const heart = document.createElement('div');
@@ -509,6 +650,59 @@
       setTimeout(() => {
         if (star.parentNode) star.parentNode.removeChild(star);
       }, 3000);
+    }
+
+    function createLoveRain() {
+      if (!hackerMode) return;
+      
+      const loveElement = document.createElement('div');
+      loveElement.className = 'love-rain';
+      loveElement.classList.add(hackerColors[Math.floor(Math.random() * hackerColors.length)]);
+      loveElement.classList.add(hackerSizes[Math.floor(Math.random() * hackerSizes.length)]);
+      
+      const message = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+      loveElement.textContent = message;
+      
+      loveElement.style.left = Math.random() * (window.innerWidth - 200) + 'px';
+      loveElement.style.animationDuration = (3 + Math.random() * 4) + 's';
+      loveElement.style.animationDelay = Math.random() * 1 + 's';
+      
+      document.getElementById('hackerOverlay').appendChild(loveElement);
+      
+      setTimeout(() => {
+        if (loveElement.parentNode) {
+          loveElement.parentNode.removeChild(loveElement);
+        }
+      }, 8000);
+    }
+
+    function activateHackerMode() {
+      hackerMode = true;
+      document.body.classList.add('hacker-mode');
+      document.getElementById('hackerOverlay').classList.add('active');
+      
+      // Crear lluvia continua de "TE AMO"
+      loveRainInterval = setInterval(createLoveRain, 100);
+      
+      // Sonido de entrada (opcional)
+      console.log('💖 MODO SECRETO ACTIVADO - LLUVIA DE AMOR INFINITA 💖');
+    }
+
+    function deactivateHackerMode() {
+      hackerMode = false;
+      document.body.classList.remove('hacker-mode');
+      document.getElementById('hackerOverlay').classList.remove('active');
+      
+      // Detener la lluvia
+      if (loveRainInterval) {
+        clearInterval(loveRainInterval);
+      }
+      
+      // Limpiar elementos existentes
+      const existingLoveRain = document.querySelectorAll('.love-rain');
+      existingLoveRain.forEach(el => el.remove());
+      
+      console.log('Modo normal restaurado');
     }
 
     function createConfetti() {
@@ -544,14 +738,25 @@
     }
 
     function startHeartAnimation() {
-      createHeart();
+      if (!hackerMode) {
+        createHeart();
+      }
       setTimeout(startHeartAnimation, 200 + Math.random() * 400);
     }
 
     function startStarAnimation() {
-      createStar();
+      if (!hackerMode) {
+        createStar();
+      }
       setTimeout(startStarAnimation, 2000 + Math.random() * 3000);
     }
+
+    // Detectar tecla ESC para salir del modo hacker
+    document.addEventListener('keydown', function(event) {
+      if (event.key === 'Escape' && hackerMode) {
+        deactivateHackerMode();
+      }
+    });
 
     // Iniciar animaciones
     startHeartAnimation();
@@ -569,7 +774,9 @@
     // Efecto de hover en el sobre
     const envelope = document.querySelector('.envelope');
     envelope.addEventListener('mouseenter', () => {
-      createConfetti();
+      if (!hackerMode) {
+        createConfetti();
+      }
     });
 
     // Mensaje de bienvenida
