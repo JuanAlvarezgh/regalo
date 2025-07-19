@@ -475,7 +475,7 @@
 
   <!-- Audio oculto -->
   <audio id="backgroundMusic" autoplay>
-    <source src="audio4.mp3" type="audio/wav">
+    <source src="Audio6.mp3" type="audio/wav">
   </audio>
 
   <script>
@@ -533,11 +533,11 @@
       const btn = document.getElementById('musicBtn');
       
       if (musicPlaying) {
-        music.pause();
+        music.play();
         btn.textContent = '🎵';
         musicPlaying = false;
       } else {
-        music.play();
+        music.pause();
         btn.textContent = '🔇';
         musicPlaying = true;
       }
